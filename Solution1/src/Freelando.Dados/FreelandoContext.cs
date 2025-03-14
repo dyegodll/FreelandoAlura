@@ -7,9 +7,7 @@ namespace Freelando.Dados;
 public class FreelandoContext : DbContext
 {
     private readonly IConfiguration _configuration;
-    public FreelandoContext(DbContextOptions<FreelandoContext> options) : base(options)
-    {
-    }
+    public FreelandoContext(DbContextOptions<FreelandoContext> options) : base(options)    {    }
 
     override protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -26,4 +24,15 @@ public class FreelandoContext : DbContext
     public DbSet<Profissional> Profissionais { get; set; }
     public DbSet<Projeto> Projetos { get; set; }
     public DbSet<Servico> Servicos { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Especialidade>(entity => 
+        {
+            entity.ToTable("TB_Especialidades");
+            entity.Property(p => p.Id).HasColumnName("Id_Especialidade");
+            entity.Property(p => p.Descricao).HasColumnName("DS_Especialidade");
+        });
+    }
+
 }
