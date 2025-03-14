@@ -27,12 +27,8 @@ public class FreelandoContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Especialidade>(entity => 
-        {
-            entity.ToTable("TB_Especialidades");
-            entity.Property(p => p.Id).HasColumnName("Id_Especialidade");
-            entity.Property(p => p.Descricao).HasColumnName("DS_Especialidade");
-        });
+        //permite o EF_Core configurar o mapeamento das classes que herdam IEntityTypeConfiguration<?>
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(FreelandoContext).Assembly);
     }
 
 }
